@@ -3,66 +3,102 @@ package clases;
 import api.EdgeData;
 import api.NodeData;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class DirectedWeightedGraph implements api.DirectedWeightedGraph {
+    private HashMap<Integer, NodeData> hashnode = new HashMap<Integer, NodeData>();
+    private HashMap<String, EdgeData> hashedge = new HashMap<String, EdgeData>();
+    private int MC = 0;
+
     @Override
     public NodeData getNode(int key) {
-        return null;
+        return this.hashnode.get(key);
     }
 
     @Override
     public EdgeData getEdge(int src, int dest) {
-        return null;
+        String key = "" + src + "," + dest;
+        return this.hashedge.get(key);
     }
 
     @Override
     public void addNode(NodeData n) {
-
+        hashnode.put(n.getKey(), n);
+        MC++;
     }
 
     @Override
     public void connect(int src, int dest, double w) {
-
+        clases.EdgeData e = new clases.EdgeData(src, dest, w);
+        this.hashedge.put("" + src + "," + dest, e);
+        MC++;
     }
 
     @Override
     public Iterator<NodeData> nodeIter() {
-        return null;
+        Iterator<NodeData> i = this.hashnode.values().iterator();
+        return i;
     }
 
     @Override
     public Iterator<EdgeData> edgeIter() {
-        return null;
+        Iterator<EdgeData> i = this.hashedge.values().iterator();
+        return i;
     }
 
     @Override
     public Iterator<EdgeData> edgeIter(int node_id) {
-        return null;
+        ArrayList<EdgeData> a = new ArrayList<EdgeData>();
+        for (String key : this.hashedge.keySet()) {
+            String src = key.split(",")[0];
+            if (Integer.parseInt(src) == node_id) {
+                a.add((clases.EdgeData) this.hashedge.get(key));
+            }
+        }
+        return a.iterator();
     }
 
     @Override
     public NodeData removeNode(int key) {
-        return null;
+        NodeData ans=this.hashnode.get(key);
+        for (String k:this.hashedge.keySet())
+        {
+            String src = k.split(",")[0];
+            String dest = k.split(",")[1];
+            if (Integer.parseInt(src) == key||Integer.parseInt(dest) == key) {
+              this.hashedge.remove(k);
+            }
+        }
+        this.hashnode.remove(key);
+        MC++;
+        return ans;
     }
 
     @Override
-    public EdgeData removeEdge(int src, int dest) {
-        return null;
+    public EdgeData removeEdge(int src, int dest)
+    {
+        String key=""+src+","+dest;
+        EdgeData ans=this.hashedge.get(key);
+        this.hashedge.remove(key);
+        MC++;
+        return ans;
     }
 
     @Override
     public int nodeSize() {
-        return 0;
+        return this.hashnode.size();
     }
 
     @Override
     public int edgeSize() {
-        return 0;
+        return this.hashedge.size();
     }
 
     @Override
     public int getMC() {
-        return 0;
+        return this.MC;
     }
 }

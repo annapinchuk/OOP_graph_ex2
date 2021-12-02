@@ -2,13 +2,14 @@ package clases;
 
 import api.DirectedWeightedGraph;
 import api.NodeData;
-
 import java.util.List;
 
 public class DirectedWeightedGraphAlgorithms implements api.DirectedWeightedGraphAlgorithms {
+    private DirectedWeightedGraph graph;
+
     @Override
     public void init(DirectedWeightedGraph g) {
-
+        this.graph = g;
     }
 
     @Override

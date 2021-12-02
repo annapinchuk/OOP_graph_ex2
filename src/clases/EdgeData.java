@@ -4,15 +4,13 @@ public class EdgeData implements api.EdgeData {
     private int Src;
     private int Dest;
     private double Wight;
-    private String Info;
-    private int Tag;
+    private String Info = "";
+    private int Tag = 0;
 
-    public void EdgeData(int Src, int Dest, double Wight, String Info, int Tag){
+    public EdgeData(int Src, int Dest, double Wight){
         this.Src = Src;
         this.Dest = Dest;
         this.Wight = Wight;
-        this.Info = Info;
-        this.Tag = Tag;
     }
     @Override
     public int getSrc() {
