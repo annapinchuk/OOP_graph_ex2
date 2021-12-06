@@ -33,13 +33,18 @@ public class DirectedWeightedGraph implements api.DirectedWeightedGraph {
 
     @Override
     public NodeData getNode(int key) {
+        if(this.hashnode.containsKey(key))
         return this.hashnode.get(key);
+        return null;
     }
 
     @Override
     public EdgeData getEdge(int src, int dest) {
         String key = "" + src + "," + dest;
-        return this.hashedge.get(key);
+        if(this.hashedge.containsKey(key)) {
+            return this.hashedge.get(key);
+        }
+        return null;
     }
 
     @Override

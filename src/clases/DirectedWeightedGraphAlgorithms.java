@@ -2,7 +2,9 @@ package clases;
 
 import api.DirectedWeightedGraph;
 import api.NodeData;
-
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 
@@ -124,7 +126,12 @@ public class DirectedWeightedGraphAlgorithms implements api.DirectedWeightedGrap
             settledNodes.add(currentNode);
         }
     }
-
+    private void resetTag(){
+            while (this.graph.nodeIter().hasNext()){
+                NodeData n  = (clases.NodeData) this.graph.nodeIter().next();
+                this.graph.getNode(n.getKey()).setTag(0);
+            }
+    }
     @Override
     public List<NodeData> shortestPath(int src, int dest) {
         clases.NodeData s = (clases.NodeData) this.graph.getNode(src);
@@ -170,29 +177,16 @@ public class DirectedWeightedGraphAlgorithms implements api.DirectedWeightedGrap
 
     @Override
     public boolean save(String file) {
-//        JSONParser parser = new JSONParser();
-//        try {
-//            Object obj = parser.parse(new FileReader("//cdn.crunchify.com/Users/Shared/crunchify.json"));
-//
-//            // A JSON object. Key value pairs are unordered. JSONObject supports java.util.Map interface.
-//            JSONObject jsonObject = (JSONObject) obj;
-//
-//            // A JSON array. JSONObject supports java.util.List interface.
-//            JSONArray companyList = (JSONArray) jsonObject.get("Company List");
-//
-//            // An iterator over a collection. Iterator takes the place of Enumeration in the Java Collections Framework.
-//            // Iterators differ from enumerations in two ways:
-//            // 1. Iterators allow the caller to remove elements from the underlying collection during the iteration with well-defined semantics.
-//            // 2. Method names have been improved.
-//            Iterator<JSONObject> iterator = companyList.iterator();
-//            while (iterator.hasNext()) {
-//                System.out.println(iterator.next());
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-
+        try {
+            FileOutputStream f = new FileOutputStream(file);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(f);
+            objectOutputStream.writeObject(this.graph);
+            objectOutputStream.close();
+            f.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
