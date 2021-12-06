@@ -21,7 +21,7 @@ import java.util.List;
 public interface DirectedWeightedGraphAlgorithms {
     /**
      * Inits the graph on which this set of algorithms operates on.
-     * @param g
+     * @param
      */
     public void init(DirectedWeightedGraph g);
 

@@ -7,9 +7,8 @@ public class NodeData implements api.NodeData {
     private String Info = "";
     private int Tag = 0;
 
-    // לבדוק אם באמת מקבלים ID ואם לא לעשות מספור סטטי ולתת עצמאית KEY
-    public void NodeData (int key, GeoLocation Location, double Weight){
-        this.Key = Key;
+    public NodeData (int key, GeoLocation Location, double Weight){
+        this.Key = key;
         this.Location = new GeoLocation(Location.x(),Location.y(),Location.z());
         this.Weight = Weight;
     }
