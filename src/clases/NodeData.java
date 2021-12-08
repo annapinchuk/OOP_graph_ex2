@@ -56,4 +56,8 @@ public class NodeData implements api.NodeData {
     public void setTag(int t) {
         this.Tag = t;
     }
+
+    public void tostring(){
+        System.out.println(this.Key +"" + this.Location + this.Weight + this.Info + this.Tag);
+    }
 }

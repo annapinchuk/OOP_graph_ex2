@@ -3,19 +3,18 @@ package clases;
 import api.EdgeData;
 import api.NodeData;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class DirectedWeightedGraph implements api.DirectedWeightedGraph {
+public class DirectedWeightedGraph implements api.DirectedWeightedGraph , Comparator<clases.NodeData>{
     private HashMap<Integer, NodeData> hashnode;
     private HashMap<String, EdgeData> hashedge;
-    private int MC = 0;
+    private int MC ;
 
     public DirectedWeightedGraph (){
         this.hashnode = new HashMap<Integer, NodeData>();
         this.hashedge = new HashMap<String, EdgeData>();
+        this.MC = 0;
     }
     public DirectedWeightedGraph (DirectedWeightedGraph g){
         this.hashnode = new HashMap<Integer, NodeData>();
@@ -125,5 +124,23 @@ public class DirectedWeightedGraph implements api.DirectedWeightedGraph {
     @Override
     public int getMC() {
         return this.MC;
+    }
+    @Override
+    public int compare(clases.NodeData n1, clases.NodeData n2){
+        if(n1.getWeight() < n2.getWeight()) return -1;
+        if(n1.getWeight() > n2.getWeight()) return 1;
+        return 0;
+    }
+    public void  tostring (){
+        System.out.println(this.getMC());
+            String mapAsString = this.hashnode.keySet().stream()
+                    .map(key -> key + "=" + this.hashnode.get(key))
+                    .collect(Collectors.joining(", ", "{", "}"));
+            System.out.println(mapAsString.toString());;
+        String mapBsString = this.hashedge.keySet().stream()
+                .map(key -> key + "=" + this.hashedge.get(key))
+                .collect(Collectors.joining(", ", "{", "}"));
+        System.out.println(mapAsString.toString());;
+
     }
 }

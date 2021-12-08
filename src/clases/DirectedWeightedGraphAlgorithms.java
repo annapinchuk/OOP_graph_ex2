@@ -33,10 +33,9 @@ public class DirectedWeightedGraphAlgorithms implements api.DirectedWeightedGrap
 
         clases.DirectedWeightedGraphAlgorithms a = new DirectedWeightedGraphAlgorithms();
         a.init(g);
-        HashMap<Integer, Double> distances = new HashMap<>();
-        HashMap<Integer, LinkedList<api.NodeData>> shortestPaths = new HashMap<>();
-        a.Dijkstra(distances, shortestPaths);
+        g.tostring();
 
+       // HashMap<Integer, Double> distances = a.Dijkstra(0);
     }
 
     @Override
@@ -58,7 +57,56 @@ public class DirectedWeightedGraphAlgorithms implements api.DirectedWeightedGrap
     @Override
     public boolean isConnected() {
         // DFS/BFS
-        return false;
+       /* resetTag();
+        if (this.graph.nodeSize() == 0|| this.graph.nodeSize()==1) return true;
+        while (this.graph.nodeIter().hasNext()) {
+            this.graph.nodeIter().next().setTag(-1);
+        }
+        boolean FLAG = true;
+        Queue<clases.NodeData> myQue = new LinkedList<>();
+        Queue<clases.NodeData> finish = new LinkedList<>();
+        clases.NodeData current;
+        if (this.graph.nodeIter().hasNext()) {
+            current = (clases.NodeData)this.graph.nodeIter().next();
+        } else {
+            System.out.println("BUG");
+            return false;
+        }
+        boolean second = false;
+        int k = 0;
+        for (; FLAG; k++) {
+            while (FLAG) {
+                FLAG = false;
+                if (myGraph.getE(current.getKey()) == null) return false;
+                List<edge_data> list = new LinkedList<>(myGraph.getE(current.getKey()));
+                if (list.isEmpty()) return false;
+                for (edge_data i : list) {
+                    if (myGraph.getNode(i.getDest()).getTag() != k) {
+                        myGraph.getNode(i.getDest()).setTag(k);
+                        myQue.add(myGraph.getNode(i.getDest()));
+                    } else if (!second) {
+                        finish.add(current);
+                    }
+                }
+                if (!myQue.isEmpty()) {
+                    current = myQue.poll();
+                    FLAG = true;
+                }
+            }
+            if (!finish.isEmpty()) {
+                current = finish.poll();
+                second = true;
+                FLAG = true;
+            }
+            nodeIter = temp.iterator();
+            while (nodeIter.hasNext()) {
+                node_data tempNode = nodeIter.next();
+                if (tempNode.getTag() != k) {
+                    return false;
+                }
+            }
+        }*/
+        return true;
     }
 
     @Override
@@ -83,48 +131,48 @@ public class DirectedWeightedGraphAlgorithms implements api.DirectedWeightedGrap
             }
         }
     }
-    private void Dijkstra(HashMap<Integer, Double> distances, HashMap<Integer, LinkedList<api.NodeData>> shortestPaths, clases.NodeData src) {
-
-        distances.put(src.getKey(), 0.0);
-
-        HashSet<clases.NodeData> settledNodes = new HashSet<>();
-        HashSet<clases.NodeData> unsettledNodes = new HashSet<>();
-
-        unsettledNodes.add(src);
-
-        while (unsettledNodes.size() != 0) {
-
-            clases.NodeData currentNode = null;
-            double lowestDistance = Double.MAX_VALUE;
-            for (clases.NodeData node : unsettledNodes) {
-                double nodeDistance = distances.get(node.getKey());
-                if (nodeDistance < lowestDistance) {
-                    lowestDistance = nodeDistance;
-                    currentNode = node;
-                }
-            }
-
-            unsettledNodes.remove(currentNode);
-            Iterator<api.EdgeData> it = this.graph.edgeIter(currentNode.getKey());
-            while (it.hasNext()) {
-                api.EdgeData e = it.next();
-                System.out.println(e.getDest());
-                api.NodeData adjacentNode = this.graph.getNode(e.getDest());
-                double edgeWeight = adjacentNode.getWeight();
-                if (!settledNodes.contains(adjacentNode)) {
-                    double sourceDistance = distances.get(currentNode.getKey());
-                    if (sourceDistance + edgeWeight < distances.get(adjacentNode.getKey())) {
-                        distances.put(adjacentNode.getKey(), sourceDistance + edgeWeight);
-                        LinkedList<api.NodeData> shortestPath = new LinkedList(shortestPaths.get(currentNode.getKey()));
-                        shortestPath.add(currentNode);
-                        shortestPaths.put(adjacentNode.getKey(), shortestPath);
-                    }
-                    unsettledNodes.add((clases.NodeData) adjacentNode);
-                }
-
-            }
-            settledNodes.add(currentNode);
+    private HashMap<Integer, Double> Dijkstra(int src) {
+        HashMap<Integer, Double> distance = new HashMap<>();
+        Iterator<NodeData> it = this.graph.nodeIter();
+        while (it.hasNext()) {
+            NodeData n = it.next();
+            distance.put(n.getKey(), Double.MAX_VALUE);
         }
+        PriorityQueue<clases.NodeData> q = new PriorityQueue<clases.NodeData>(this.graph.nodeSize());
+        q.add(new clases.NodeData(src, new clases.GeoLocation(0,0,0), 0.0));
+        distance.put(src, 0.0);
+        HashSet<Integer> visited = new HashSet<Integer>();
+
+        while (visited.size() != this.graph.nodeSize()) {
+            if (q.isEmpty())
+                return distance;
+            int u = q.remove().getKey();
+            if (visited.contains(u))
+                continue;
+            visited.add(u);
+            double edgeDistance = -1;
+            double newDistance = -1;
+
+            Iterator<api.EdgeData> eIt = this.graph.edgeIter(u);
+            while (eIt.hasNext()) {
+                api.EdgeData e = eIt.next();
+                NodeData v = this.graph.getNode(e.getDest());
+
+                // If current node hasn't already been processed
+                if (!visited.contains(v.getKey())) {
+                    edgeDistance = v.getWeight();
+                    newDistance = distance.get(u) + edgeDistance;
+
+                    // If new distance is cheaper in cost
+                    if (newDistance < distance.get(v.getKey()))
+                        distance.put(v.getKey(), newDistance);
+
+                    // Add the current node to the queue
+                    q.add(new clases.NodeData(v.getKey(), new GeoLocation(0,0,0), distance.get(v.getKey())));
+                }
+            }
+        }
+        return distance;
     }
     private void resetTag(){
             while (this.graph.nodeIter().hasNext()){
