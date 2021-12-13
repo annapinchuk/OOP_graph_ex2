@@ -21,37 +21,48 @@ The links of the algorithms:
 * Info<br/>
 * Tag<br/>
 
-### GeoLocation
-#### each GeoLocation has:
+### Point3D
+#### each Point3D has:
 * x<br/>
 * y <br/>
 * z <br/>
 
-### EdgeData
-#### each EdgeData has:
+### EData
+#### each EData has:
 * Src<br/>
 * Dest <br/>
 * Wight <br/>
 * Info <br/>
 * Tag <br/>
 
-### DirectedWeightedGraph
-#### each DirectedWeightedGraph has:
+### DGraph
+#### each DGraph has:
 * hashnode<br/>
 * hashedge <br/>
+* EdgeZise <br/>
 * MC <br/>
 
-### DirectedWeightedGraphAlgorithms
-#### each DirectedWeightedGraphAlgorithms has:
-* graph<br/>
+### Graph_Algo
+#### each Graph_Algo has:
+* DGraph<br/>
+
+### Ex2
+#### The jar and main that runs everything
+
+### My_GUI
+#### runs the GIU actions
+
+### Graph_Panel
+#### runs the panle and paint actions
 
 ## Results
-loading time in ms:
-around 100 vertices 100 edges:
-34 mil/sec
-1,000 vertices 10,000 edges:
-51 mil/sec
-10,000 vertices 100,000 edges:
-396 mil/sec
+loading time in ms: <br/>
+around 100 vertices 100 edges: <br/>
+34 mil/sec <br/>
+1,000 vertices 10,000 edges: <br/>
+51 mil/sec <br/>
+10,000 vertices 100,000 edges: <br/>
+396 mil/sec <br/>
 ## UML Diagram
-<img src="https://github.com/annapinchuk/ElevatorsEx1/blob/master/UML.png" width="600">
+click to see the full uml
+<img src="https://github.com/annapinchuk/OOP_graph_ex2/blob/master/oop_ex2/uml.png" width="1000000">
