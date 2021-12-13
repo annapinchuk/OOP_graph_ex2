@@ -1,6 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Ex2">
-    <output-path>$PROJECT_DIR$/out/artifacts/Ex2</output-path>
-    <root id="archive" name="Ex2.jar" />
-  </artifact>
-</component>

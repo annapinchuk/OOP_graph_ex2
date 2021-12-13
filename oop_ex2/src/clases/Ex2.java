@@ -49,6 +49,6 @@ public class Ex2 {
     }
 
     public static void main(String[] args) {
-        runGUI("oop_ex2/data/G1.json");
+        runGUI(args[0]);
     }
 }
